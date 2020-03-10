@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>MINI MARKET</title>
+  </head>
+  <body>
+    <script>
+      //array buah
+
+      let totalHarga = 0;
+      let menuCart;
+      let conditionBuy = true;
+      let inputMenu;
+      let menuadmin;
+      let loopMenuUtama = true;
+      let loopMenuAdmin = true;
+      let inputQty;
+      let hapusItem
+      class Utama {
+        constructor(nama, harga, stock) {
+          this.nama = nama;
+          this.harga = harga;
+          this.stock = stock;
+          this.qty = 0;
+        }
+      }
+
+      class Buah extends Utama {
+        constructor(nama, harga, stock, expdate) {
+          super(nama, harga, stock);
+          this.expdate = expdate;
+        }
+      }
+
+      class Clothing extends Utama {
+        constructor(nama, harga, stock, size) {
+          super(nama, harga, stock);
+          this.size = size;
+        }
+      }
+
+      class Hape extends Utama {
+        constructor(nama, harga, stock, warranty) {
+          super(nama, harga, stock);
+          this.warranty = warranty;
+        }
+      }
+
+      let arrItem = [
+        [
+          new Buah("Pepaya", 1000, 10, "3-3-2020"),
+          new Buah("Mangga", 1000, 10, "4-3-2020"),
+          new Buah("Pisang", 1000, 10, "5-3-2020")
+        ],
+        [
+          new Clothing("kaos", 5000, 10, "S"),
+          new Clothing("kaos", 5000, 10, "M"),
+          new Clothing("kaos", 5000, 10, "L")
+        ],
+        [
+          new Hape("Samsung", 500000, 10, true),
+          new Hape("Xiaomi", 500000, 10, false),
+          new Hape("Asus", 500000, 10, false)
+        ]
+      ];
+
+      function dspMenuAwal() {
+        menuadmin = prompt(`1. Menu Admin\n2. Menu Berbelanja\n3. Exit`);
+      }
+
+      function dspMenuBuah() {
+        let result = "";
+        for (let i = 0; i < arrItem.length; i++) {
+          no = i + 1;
+          result +=
+            no +
+            ".  " +
+            arrItem[0][i].nama +
+            " Harga : " +
+            arrItem[0][i].harga +
+            " Persediaan : " +
+            arrItem[0][i].stock +
+            " EXP date : " +
+            arrItem[0][i].expdate +
+            "\n";
+        }
+        inputMenu = parseInt(
+          prompt(
+            `${result}`
+          )
+        );
+        inputMenu -= 1;
+      }
+
+      function dspMenuClothing() {
+        let result = "";
+        for (let i = 0; i < arrItem.length; i++) {
+          no = i + 1;
+          result +=
+            no +
+            ".  " +
+            arrItem[1][i].nama +
+            " Harga : " +
+            arrItem[1][i].harga +
+            " Persediaan : " +
+            arrItem[1][i].stock +
+            " Ukuran " +
+            arrItem[1][i].size +
+            "\n";
+        }
+        inputMenu = parseInt(
+          prompt(
+            `${result}`
+          )
+        );
+        inputMenu -= 1;
+      }
+
+      function dspMenuHape() {
+        let result = "";
+        for (let i = 0; i < arrItem.length; i++) {
+          no = i + 1;
+          result +=
+            no +
+            ".  " +
+            arrItem[2][i].nama +
+            " Harga : " +
+            arrItem[2][i].harga +
+            " Persediaan " +
+            arrItem[2][i].stock +
+            " Garansi " +
+            arrItem[2][i].warranty +
+            "\n";
+        }
+
+        inputMenu = parseInt(
+          prompt(
+            `${result}`
+          )
+        );
+        
+        inputMenu -= 1;
+      }
+        
+      function dspCart() {
+        for (let i = 0; i < arrItem.length; i++) {
+          for (let j = 0; j < arrItem[i].length; j++) {
+            menuCart +=
+              arrItem[i][j].nama +
+              " Harga :" +
+              arrItem[i][j].harga +
+              " Jumlah : " +
+              arrItem[i][j].qty +
+              "\n";
+          }
+        }
+        alert(menuCart);
+      }
+
+      function totalbayar() {
+        for (let i = 0; i < arrItem.length; i++) {
+          for (let j = 0; j < arrItem[i].length; j++) {
+          totalHarga += arrItem[i][j].qty * arrItem[i][j].harga;
+        }
+        }
+        jmlbayar = prompt(
+          "Total belanja anda sebesar :" +
+            totalHarga +
+            "\n masukan jumlah pembayaran : "
+        );
+        return totalHarga;
+      }
+
+      function bayarLagi() {
+        let sisabayar = jmlbayar - totalHarga;
+        if (sisabayar > 0) {
+          alert(
+            "terimakasih telah berbelanja, kembalian anda sebesar :" + sisabayar
+          );
+          bayarLagi = false;
+        } else if (sisabayar == 0) {
+          alert("terimakasih telah berbelanja menggunakan uang pas");
+          bayarLagi = false;
+        } else {
+          alert("Maaf uang anda kurang sebesar :" + sisabayar);
+        }
+      }
+
+      function inputItemBuah() {
+        inputQty = parseInt(
+          prompt(
+            arrItem[0][inputMenu].nama +
+              " harga : " +
+              arrItem[0][inputMenu].harga +
+              "   stock :" +
+              arrItem[0][inputMenu].stock +
+              "   expired date :" +
+              arrItem[0][inputMenu].expdate +
+              "\nMasukan jumlah yang ingin dibeli :"
+          )
+        );
+        let tanggalBasi = arrItem[0][inputMenu].expdate.split('-')
+        let kompareTanggal = new Date(tanggalBasi[2], tanggalBasi[1] - 1, tanggalBasi[0])
+        let tanggalKini = new Date()
+        if (kompareTanggal <= tanggalKini ) {
+        prompt('Buah ini melewati tanggal kadaluarsa, tidak dapat dibeli')
+      } else {
+        arrItem[0][inputMenu].qty += inputQty;
+        inputQty -= 1;
+        return inputQty;
+      }
+      }
+
+      function inputItemClothing() {
+        inputQty = parseInt(
+          prompt(
+            arrItem[1][inputMenu].nama +
+              " harga : " +
+              arrItem[1][inputMenu].harga +
+              "   stock :" +
+              arrItem[1][inputMenu].stock +
+              "   Size :" +
+              arrItem[1][inputMenu].size +
+              "\nMasukan jumlah yang ingin dibeli :"
+          )
+        );
+        arrItem[1][inputMenu].qty += inputQty;
+        inputQty -= 1;
+        return inputQty;
+      }
+
+      function inputItemHape() {
+        inputQty = parseInt(
+          prompt(
+            arrItem[2][inputMenu].nama +
+              " harga : " +
+              arrItem[2][inputMenu].harga +
+              "   stock :" +
+              arrItem[2][inputMenu].stock +
+              "   warranty :" +
+              arrItem[2][inputMenu].warranty +
+              "\nMasukan jumlah yang ingin dibeli :"
+          )
+        )
+      if (arrItem[2][inputMenu].warranty == false ) {
+         lanjut = confirm('Ponsel ini tidak memiliki Garansi, ingin lanjut membeli ?')
+            if (lanjut = true) {
+            arrItem[2][inputMenu].qty += inputQty;
+            inputQty -= 1;
+            return inputQty;
+            }
+        }
+      }
+
+      //main line program
+      // Menu admin
+      do {
+        dspMenuAwal();
+        if (menuadmin == 1) {
+          let inputAddMenu = prompt(
+            `1. Add buah\n2. Add clothing\n3. Add Hape\n4. Delete Buah\n5. Delete Clothing\n6. Delete Hape\n7. logout`
+          );
+          do {
+            if (inputAddMenu == 1) {
+              let newItemName = prompt("Masukkan nama buah");
+              let newItemPrice = parseInt(prompt("Masukkan harga item"));
+              let newItemStock = parseInt(prompt("Masukkan jumlah stock item"));
+              let newItemExpired = parseInt(prompt("Masukkan bulan expired"));
+              new Buah(newItemName, newItemPrice, newItemStock, newItemExpired);
+              loopMenuAdmin = false;
+            }
+            if (inputAddMenu == 2) {
+              let newItemName = prompt("Masukkan nama clothing");
+              let newItemPrice = parseInt(prompt("Masukkan harga item"));
+              let newItemStock = parseInt(prompt("Masukkan jumlah stock item"));
+              let newItemSize = prompt("Masukan size baju");
+              new Clothing(
+                newItemName,
+                newItemPrice,
+                newItemStock,
+                newItemSize
+              );
+              loopMenuAdmin = false;
+            }
+            if (inputAddMenu == 3) {
+              let newItemName = prompt("Masukkan nama hape");
+              let newItemPrice = parseInt(prompt("Masukkan harga item"));
+              let newItemStock = parseInt(prompt("Masukkan jumlah stock item"));
+              let newItemWarranty = parseInt(
+                prompt("Masukan Warranty (true/false)")
+              );
+              new Hape(
+                newItemName,
+                newItemPrice,
+                newItemStock,
+                newItemWarranty
+              );
+              loopMenuAdmin = false;
+            }
+            if (inputAddMenu == 4) {
+            hapusItem = prompt(dspMenuBuah() + 'Masukan nama buah yang ingin dihapus :')
+            for (let i = 0; i < arrItem.length; i++){
+              if (arrItem[0][i].nama.toLowerCase() == hapusItem.toLowerCase()){
+                arrItem[0][i].splice(i,1)
+              }
+            }
+              loopMenuAdmin = false;
+            }
+            if (inputAddMenu == 5) {
+            hapusItem = prompt(dspMenuClothing() + 'Masukan nama clothing yang ingin dihapus :')
+            for (let i = 0; i < arrItem.length; i++){
+              if (arrItem[1][i].nama.toLowerCase() == hapusItem.toLowerCase()){
+                arrItem[1][i].splice(i,1)
+              }
+            }
+              loopMenuAdmin = false;
+            }
+            if (inputAddMenu == 6) {
+            hapusItem = prompt(dspMenuHape() + 'Masukan nama hape yang ingin dihapus :')
+            for (let i = 0; i < arrItem.length; i++){
+              if (arrItem[2][i].nama.toLowerCase() == hapusItem.toLowerCase()){
+                arrItem[2][i].splice(i,1)
+              }
+            }
+              loopMenuAdmin = false;
+            }
+            if (inputAddMenu == 7) {
+              loopMenuAdmin = false;
+            }
+          } while (loopMenuAdmin);
+        } else if (menuadmin == 2) {
+          //menu belanja
+          while (conditionBuy) {
+            let inputMenuBelanja = prompt(
+              `1. Beli buah\n2. Beli clothing\n3. Beli Hape\n4. Cart\n5. Checkout`
+            );
+
+            if (inputMenuBelanja == 1) {
+              dspMenuBuah();
+              inputItemBuah();
+            } else if (inputMenuBelanja == 2) {
+              dspMenuClothing();
+              inputItemClothing();
+            } else if (inputMenuBelanja == 3) {
+              dspMenuHape();
+              inputItemHape();
+            }
+            // cart menu
+            menuCart = "";
+            if (inputMenuBelanja == arrItem.length + 1) {
+              dspCart();
+            }
+            // checkout menu
+            else if (inputMenuBelanja == arrItem.length + 2) {
+              totalbayar();
+              conditionBuy = false;
+              break;
+            }
+          }
+
+          //logic bayar
+          bayarlagi = true;
+          while (bayarlagi) {
+            bayarLagi();
+          }
+        } else {
+          loopMenuUtama = false;
+        }
+
+        if (menuadmin == 3) {
+          loopMenuUtama = false;
+        }
+      } while (loopMenuUtama);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    //stock buah
+mangga = 100
+pepaya = 100    
+pisang = 100
+jambu = 100
+
+    //harga buah
+hrgmangga = 1000
+hrgpepaya = 2000
+hrgpisang = 3000
+hrgjambu = 4000
+
+alert(` DAFTAR MENU
+
+ 1. Mangga  = ${hrgmangga}
+
+ 2. Pepaya  = ${hrgpepaya}
+ 
+ 3. Pisang  = ${hrgpisang}
+ 
+ 4. Jambu   = ${hrgjambu} `)
+
+    //input pembelian
+let intro1 = "masukan jumlah pembelian mangga : "
+let jmlmangga = prompt(intro1)
+
+let intro2 = "masukan jumlah pembelian pepaya : "
+let jmlpepaya = prompt(intro2)
+
+let intro3 = "masukan jumlah pembelian pisang : "
+let jmlpisang = prompt(intro3)
+
+let intro4 = "masukan jumlah pembelian jambu : "
+let jmljambu = prompt(intro4)
+
+let hslmangga = mangga - jmlmangga
+let hslpepaya = pepaya - jmlpepaya
+let hslpisang = pisang - jmlpisang
+let hsljambu = jambu - jmljambu
+
+let totharga = (jmlmangga * hrgmangga) + (jmlpepaya * hrgpepaya) + (jmlpisang * hrgpisang) + (jmljambu * hrgjambu)
+    //logic stock
+if (hslmangga < 0 || hslpepaya < 0 || hslpisang < 0 || hsljambu < 0) {
+    alert('jumlah pesanan melebihi stock yang tersedia') 
+    throw new console.error()   
+} else {
+    alert('total belanjaan seharga :' + totharga)
+}
+
+    //input harga
+let intro5 = "masukan jumlah uang pembayaran : "
+let jmlbayar = prompt(intro5)
+
+let sisabayar = jmlbayar - totharga
+    //logic bayar
+if (sisabayar > 0) {
+    alert('terimakasih telah berbelanja, kembalian anda sebesar :' + sisabayar)
+} else if (sisabayar == 0) {
+    alert('terimakasih telah berbelanja menggunakan uang pas')
+} else {
+    alert('Maaf uang anda kurang sebesar :' + sisabayar)
+} 
+</script>
+</body>
+</html>

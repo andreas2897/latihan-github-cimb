@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>MINI MARKET</title>
+  </head>
+  <body>
+    <script>
+      //array buah
+      let arrMenu = [
+        {
+          buah: "pepaya",
+          harga: 1000,
+          stock: 10,
+          input: 0
+        },
+        {
+          buah: "mangga",
+          harga: 1000,
+          stock: 10,
+          input: 0
+        },
+        {
+          buah: "pisang",
+          harga: 1000,
+          stock: 10,
+          input: 0
+        }
+      ];
+
+      let totalHarga = 0;
+      let menuCart;
+      let conditionBuy = true;
+      while (conditionBuy) {
+        //menu buah
+        let result = "";
+        for (let i = 0; i < arrMenu.length; i++) {
+          no = i + 1;
+          result +=
+            no +
+            ".  " +
+            arrMenu[i].buah +
+            " - " +
+            arrMenu[i].harga +
+            " - " +
+            arrMenu[i].stock +
+            "\n";
+        }
+
+        let inputMenu = prompt(
+          `${result}${arrMenu.length + 1}.checkout\n${arrMenu.length + 2}.cart`
+        );
+        inputMenu -= 1; // inputMenu = inputMenu - 1
+
+        // cart menu
+        menuCart = "";
+        if (inputMenu == arrMenu.length + 1) {
+          for (let i = 0; i < arrMenu.length; i++) {
+            menuCart +=
+              arrMenu[i].buah +
+              " Harga :" +
+              arrMenu[i].harga +
+              " Jumlah : " +
+              arrMenu[i].input +
+              "\n";
+          }
+          alert(menuCart);
+          //conditionBuy = true;
+        }
+
+        // checkout menu
+        else if (inputMenu == arrMenu.length) {
+          for (let i = 0; i < arrMenu.length; i++) {
+            totalHarga += arrMenu[i].input * arrMenu[i].harga;
+          }
+          jmlbayar = prompt(
+            "Total belanja anda sebesar :" +
+              totalHarga +
+              "\n masukan jumlah pembayaran : "
+          );
+          conditionBuy = false;
+          break;
+        }
+        else {
+          let inputBuah = parseInt(
+            prompt(
+              arrMenu[inputMenu].buah +
+                " harga : " +
+                arrMenu[inputMenu].harga +
+                "   stock :" +
+                arrMenu[inputMenu].stock
+            )
+          );
+          arrMenu[inputMenu].input += inputBuah;
+        }
+
+        
+      }
+
+      //logic bayar
+      bayarlagi = true;
+      while (bayarlagi) {
+        let sisabayar = jmlbayar - totalHarga;
+        if (sisabayar > 0) {
+          alert(
+            "terimakasih telah berbelanja, kembalian anda sebesar :" + sisabayar
+          );
+          break;
+        } else if (sisabayar == 0) {
+          alert("terimakasih telah berbelanja menggunakan uang pas");
+          break;
+        } else {
+          alert("Maaf uang anda kurang sebesar :" + sisabayar);
+        }
+      }
+    </script>
+  </body>
+</html>

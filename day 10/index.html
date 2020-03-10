@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        table, tr, td, th {
+            border: 2px solid black;
+            text-align: center;
+        }
+    </style>
+    <center>
+        <table>
+            <thead>
+
+                <tr>
+                    <th onclick="sortDatanama()">Nama </th>
+                    <th onclick="sortDataPekerjaan()">Pekerjaan</th> 
+                    <th onclick="sortDataUmur()">Umur</th>
+                    <th>Picture</th>
+                </tr>
+            </thead>
+            <tbody id='mainData'>
+            </tbody>
+            
+            <tfoot>
+                <tr>
+                    <form id ='myForm'>
+                    <td><input type="text" name="" id="inputNama" placeholder="input nama"></td>
+                    <td><input type="text" name="" id="inputPekerjaan" placeholder="input Pekerjaan"></td>
+                    <td><input type="text" name="" id="inputUmur" placeholder="input Umur"></td>
+                    <td><input type="text" name="" id="inputPict" placeholder="input Picture"></td>
+                    <td><input type="button" value="Submit" id="submitBtn" onclick="addData()"></td>
+                    </form>
+                </tr>
+            </tfoot>
+            </table>
+    </center>
+<script>
+class Orang{
+    constructor(nama, pekerjaan, umur, pict){
+        this.nama = nama
+        this. pekerjaan = pekerjaan
+        this.umur = umur
+        this.pict = pict
+    }
+}
+
+let dataOrang = [
+    new Orang ('b', 'nyuci', 2,'https://cdn0.iconfinder.com/data/icons/avatars-and-smiles-collection/110/Icons__business-512.png'),
+    new Orang ('c', 'gosok', 10,'https://cdn0.iconfinder.com/data/icons/south-korea-landmark-and-culture-filled-outline/64/South_Korea_monk_buddhism-512.png'),
+    new Orang ('a', 'nyapu', 15,'https://cdn0.iconfinder.com/data/icons/south-korea-landmark-and-culture-flat-design/64/South_Korea_man_avatar-512.png')
+]
+
+const renderData = () => {
+    let hasil =''
+    dataOrang.forEach(({nama, pekerjaan, umur, pict}, index) => {
+    hasil +=` 
+    <tr>
+    <td>${nama}</td>
+    <td>${pekerjaan}</td>
+    <td>${umur}</td>
+    <td><img src=${pict} width=100px></td>
+    <td><input type="button" value="Delete" id="deletetBtn" onclick="deleteData(${index})"></td>
+    </tr>
+    `
+})
+document.getElementById('mainData').innerHTML=hasil
+if (dataOrang == '') {
+    alert('data kosong')
+}
+}
+
+renderData()
+
+const addData = () =>{
+let inputNama = document.getElementById('inputNama').value
+let inputPekerjaan = document.getElementById('inputPekerjaan').value
+let inputUmur = document.getElementById('inputUmur').value
+let inputPict = document.getElementById('inputPict').value
+if (inputNama == '' && inputPekerjaan == '' && inputUmur == '' && inputPict == '') {
+    alert('Data yang dimasukan belum lengkap')
+} else {
+    let newData = new Orang(inputNama, inputPekerjaan, inputUmur, inputPict)
+    dataOrang.push(newData)
+}
+document.getElementById("myForm").reset()
+renderData()
+}
+
+const deleteData = (deleteIndex) => {
+    dataOrang.splice(deleteIndex,1)
+    renderData()
+if (dataOrang == '') {
+    alert('data kosong')
+}
+}
+let cond = 0
+const sortDatanama = () => {
+    function urut(a,b) {
+    if (a.nama < b.nama){
+        if (cond == 0) {
+            return -1
+        } return 1
+    }
+
+    if (a.nama > b.nama){
+        if (cond == 0) {
+            return 1
+        } return -1
+    }
+    }
+ dataOrang.sort(urut)
+   
+    if (cond == 0){
+        cond = 1
+    } else {
+        cond = 0
+    }    
+    renderData()
+}
+
+const sortDataPekerjaan = () => {
+    function urut(a,b) {
+    if (a.pekerjaan < b.pekerjaan){
+        if (cond == 0) {
+            return -1
+        } return 1
+    }
+
+    if (a.pekerjaan > b.pekerjaan){
+        if (cond == 0) {
+            return 1
+        } return -1
+    }
+    }
+
+    dataOrang.sort(urut)
+    if (cond == 0){
+        cond = 1
+    } else {
+        cond = 0
+    }    
+    renderData()
+}
+
+const sortDataUmur = () => {
+    function urut(a,b) {
+    if (a.umur < b.umur){
+        if (cond == 0) {
+            return -1
+        } return 1
+    }
+
+    if (a.umur > b.umur){
+        if (cond == 0) {
+            return 1
+        } return -1
+    }
+    }
+
+    dataOrang.sort(urut)
+    if (cond == 0){
+        cond = 1
+    } else {
+        cond = 0
+    }    
+    renderData()
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //array buah
+      let arrBuah = ["pepaya", "mangga", "pisang"];
+      let arrHargaBuah = [1000, 2000, 3000];
+      let arrStockBuah = [10, 10, 10];
+      let arrInput = [0, 0, 0];
+      let totalHarga = 0;
+
+      let conditionBuy = true;
+      while (conditionBuy) {
+        //menu buah
+        let result = "";
+        for (let i = 0; i < arrBuah.length; i++) {
+          no = i + 1;
+          result +=
+            no +
+            ".  " +
+            arrBuah[i] +
+            " - " +
+            arrHargaBuah[i] +
+            " - " +
+            arrStockBuah[i] +
+            "\n";
+        }
+
+        let inputMenu = prompt(result + "\n4. chechout");
+        inputMenu -= 1; // inputMenu = inputMenu - 1
+
+        if (inputMenu == arrBuah.length) {
+          for (let i = 0; i < arrBuah.length; i++) {
+            totalHarga += arrInput[i] * arrHargaBuah[i];
+          }
+          jmlbayar = prompt(
+            "Total belanja anda sebesar :" +
+              totalHarga +
+              "\n masukan jumlah pembayaran : "
+          );
+          conditionBuy = false;
+          break;
+        }
+
+        let inputBuah = parseInt(
+          prompt(
+            arrBuah[inputMenu] +
+              " harga : " +
+              arrHargaBuah[inputMenu] +
+              "   stock :" +
+              arrStockBuah[inputMenu]
+          )
+        );
+
+        arrInput[inputMenu] += inputBuah;
+      }
+
+      //logic bayar
+      bayarlagi = true;
+      while (bayarlagi) {
+        let sisabayar = jmlbayar - totalHarga;
+        if (sisabayar > 0) {
+          alert(
+            "terimakasih telah berbelanja, kembalian anda sebesar :" + sisabayar
+          );
+          break;
+        } else if (sisabayar == 0) {
+          alert("terimakasih telah berbelanja menggunakan uang pas");
+          break;
+        } else {
+          alert("Maaf uang anda kurang sebesar :" + sisabayar);
+        }
+      }
+    </script>
+  </body>
+</html>
